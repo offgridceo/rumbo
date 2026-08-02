@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rumbo — Itinerary & Trip Organizer</title>
+  <title>Rumbo — Travel Dashboard & Trip Organizer</title>
   
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -70,6 +70,7 @@
       align-items: center;
       gap: 8px;
       letter-spacing: -0.5px;
+      cursor: pointer;
     }
 
     .nav-controls {
@@ -78,7 +79,7 @@
       gap: 12px;
     }
 
-    .lang-btn, .mode-btn {
+    .lang-btn, .mode-btn, .back-btn {
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--card-border);
       color: var(--text-main);
@@ -93,9 +94,183 @@
       transition: all 0.2s ease;
     }
 
-    .lang-btn:hover, .mode-btn:hover {
+    .lang-btn:hover, .mode-btn:hover, .back-btn:hover {
       background: rgba(255, 255, 255, 0.1);
       border-color: var(--accent-teal);
+    }
+
+    /* Dashboard Layout */
+    .dashboard-container {
+      max-width: 800px;
+      margin: 24px auto;
+      padding: 0 20px;
+    }
+
+    .dash-section-label {
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Pinned Trip Card */
+    .pinned-card {
+      background: linear-gradient(135deg, rgba(22, 26, 34, 0.95), rgba(30, 36, 48, 0.95));
+      border: 1px solid var(--accent-coral);
+      border-radius: 18px;
+      padding: 22px;
+      margin-bottom: 28px;
+      box-shadow: 0 12px 32px rgba(255, 94, 87, 0.12);
+      position: relative;
+    }
+
+    .pinned-badge {
+      position: absolute;
+      top: -12px;
+      right: 20px;
+      background: var(--accent-coral);
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.8px;
+    }
+
+    .pinned-title {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .pinned-sub {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .open-trip-btn {
+      background: var(--accent-coral);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+    }
+
+    .open-trip-btn:hover {
+      opacity: 0.9;
+    }
+
+    /* Trips Grid */
+    .trips-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .trip-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 130px;
+    }
+
+    .trip-card:hover {
+      border-color: var(--accent-teal);
+      transform: translateY(-2px);
+    }
+
+    .trip-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .trip-card-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .add-trip-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px dashed var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-weight: 700;
+      font-size: 0.9rem;
+      min-height: 130px;
+      transition: all 0.2s ease;
+    }
+
+    .add-trip-card:hover {
+      border-color: var(--accent-teal);
+      color: var(--accent-teal);
+      background: rgba(0, 210, 211, 0.04);
+    }
+
+    /* Travel Toolkit Dock */
+    .toolkit-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 12px;
+    }
+
+    .tool-link {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .tool-link:hover {
+      border-color: var(--accent-amber);
+      background: rgba(255, 159, 67, 0.05);
+    }
+
+    .tool-icon {
+      color: var(--accent-amber);
     }
 
     /* Budget Dashboard Bar */
@@ -507,12 +682,16 @@
   <!-- Header & Nav Bar -->
   <header>
     <div class="nav-container">
-      <div class="logo">
+      <div class="logo" onclick="showDashboard()">
         <i data-lucide="compass"></i>
         <span>Rumbo</span>
       </div>
       <div class="nav-controls">
-        <button class="mode-btn" id="modeToggle" onclick="toggleReadMode()">
+        <button class="back-btn" id="dashBackBtn" onclick="showDashboard()" style="display: none;">
+          <i data-lucide="layout-dashboard"></i>
+          <span data-i18n="dashboard">Dashboard</span>
+        </button>
+        <button class="mode-btn" id="modeToggle" onclick="toggleReadMode()" style="display: none;">
           <i data-lucide="eye" id="modeIcon"></i>
           <span id="modeText">Edit Mode</span>
         </button>
@@ -524,28 +703,84 @@
     </div>
   </header>
 
-  <!-- Sticky Budget Bar -->
-  <div class="budget-bar">
-    <div class="budget-card">
-      <div class="stat-item">
-        <span class="stat-label" data-i18n="totalBudget">Total Budget</span>
-        <span class="stat-value val-budget" id="displayBudget" onclick="promptEditBudget()">$1,500</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-label" data-i18n="totalSpent">Total Spent</span>
-        <span class="stat-value val-spent" id="displaySpent">$0</span>
-      </div>
-      <div class="stat-item">
-        <span class="stat-label" data-i18n="remaining">Remaining</span>
-        <span class="stat-value val-remain" id="displayRemain">$1,500</span>
-      </div>
+  <!-- Homepage Dashboard View -->
+  <div id="dashboardView" class="dashboard-container">
+    
+    <!-- Pinned Trip -->
+    <div class="dash-section-label">
+      <i data-lucide="pin" size="14" style="color:var(--accent-coral)"></i>
+      <span data-i18n="pinnedTrip">Pinned Active Trip</span>
+    </div>
+
+    <div class="pinned-card" id="pinnedCard">
+      <!-- Dynamically filled in JS -->
+    </div>
+
+    <!-- All Saved Trips -->
+    <div class="dash-section-label">
+      <i data-lucide="map" size="14" style="color:var(--accent-teal)"></i>
+      <span data-i18n="myTrips">My Saved Trips</span>
+    </div>
+
+    <div class="trips-grid" id="tripsGrid">
+      <!-- Dynamically filled in JS -->
+    </div>
+
+    <!-- Travel Toolkit -->
+    <div class="dash-section-label">
+      <i data-lucide="briefcase" size="14" style="color:var(--accent-amber)"></i>
+      <span data-i18n="travelToolkit">Travel Companion Apps</span>
+    </div>
+
+    <div class="toolkit-grid">
+      <a href="https://maps.google.com" target="_blank" class="tool-link">
+        <i data-lucide="map-pin" class="tool-icon"></i>
+        <span>Google Maps</span>
+      </a>
+      <a href="https://www.airbnb.com" target="_blank" class="tool-link">
+        <i data-lucide="home" class="tool-icon"></i>
+        <span>Airbnb</span>
+      </a>
+      <a href="https://www.google.com/travel/flights" target="_blank" class="tool-link">
+        <i data-lucide="plane" class="tool-icon"></i>
+        <span>Google Flights</span>
+      </a>
+      <a href="https://translate.google.com" target="_blank" class="tool-link">
+        <i data-lucide="languages" class="tool-icon"></i>
+        <span>Translate</span>
+      </a>
+      <a href="https://www.xe.com" target="_blank" class="tool-link">
+        <i data-lucide="dollar-sign" class="tool-icon"></i>
+        <span>XE Currency</span>
+      </a>
     </div>
   </div>
 
-  <!-- Main Vertical Timeline -->
-  <main class="main-container" id="timeline">
-    <!-- Days and Entries dynamically rendered via JS -->
-  </main>
+  <!-- Detailed Trip Itinerary View (Initially Hidden) -->
+  <div id="itineraryView" style="display: none;">
+    <!-- Sticky Budget Bar -->
+    <div class="budget-bar">
+      <div class="budget-card">
+        <div class="stat-item">
+          <span class="stat-label" data-i18n="totalBudget">Total Budget</span>
+          <span class="stat-value val-budget" id="displayBudget" onclick="promptEditBudget()">$1,500</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label" data-i18n="totalSpent">Total Spent</span>
+          <span class="stat-value val-spent" id="displaySpent">$0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label" data-i18n="remaining">Remaining</span>
+          <span class="stat-value val-remain" id="displayRemain">$1,500</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Vertical Timeline -->
+    <main class="main-container" id="timeline">
+      <!-- Days and Entries dynamically rendered via JS -->
+    </main>
+  </div>
 
   <!-- Modal Container for Location Form -->
   <div id="modalOverlay" class="modal-overlay" style="display: none;">
@@ -591,9 +826,39 @@
     </div>
   </div>
 
+  <!-- Modal Container for New Trip Form -->
+  <div id="newTripModalOverlay" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>Create New Trip</span>
+        <button class="action-icon-btn" onclick="closeNewTripModal()"><i data-lucide="x"></i></button>
+      </div>
+      <form onsubmit="createNewTrip(event)">
+        <div class="form-group">
+          <label class="form-label">Trip Title</label>
+          <input type="text" id="newTripTitle" class="form-input" placeholder="e.g. Tokyo 10 Day Exploration" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Total Budget ($)</label>
+          <input type="number" id="newTripBudget" class="form-input" placeholder="2000" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" onclick="closeNewTripModal()">Cancel</button>
+          <button type="submit" class="btn-save">Create Trip</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
     const i18n = {
       en: {
+        dashboard: "Dashboard",
+        pinnedTrip: "Pinned Active Trip",
+        myTrips: "My Saved Trips",
+        travelToolkit: "Travel Companion Apps",
+        openTrip: "Open Itinerary",
+        newTrip: "Create New Trip",
         totalBudget: "Total Budget",
         totalSpent: "Total Spent",
         remaining: "Remaining",
@@ -610,6 +875,12 @@
         addDay: "Add New Day"
       },
       es: {
+        dashboard: "Panel Base",
+        pinnedTrip: "Viaje Fijado Principal",
+        myTrips: "Mis Viajes Guardados",
+        travelToolkit: "Herramientas de Viaje",
+        openTrip: "Abrir Itinerario",
+        newTrip: "Crear Nuevo Viaje",
         totalBudget: "Presupuesto Total",
         totalSpent: "Total Gastado",
         remaining: "Restante",
@@ -630,57 +901,66 @@
     let currentLang = 'en';
     let isReadOnly = false;
     let draggedItem = null;
+    let activeTripId = 1;
 
-    let tripData = {
-      budget: 1500,
-      spent: 120,
-      days: [
+    let appData = {
+      pinnedTripId: 1,
+      trips: [
         {
           id: 1,
-          titleEn: "Day 1 - Arrival & Historic Center",
-          titleEs: "Día 1 - Llegada y Centro Histórico",
-          lat: 19.4326,
-          lon: -99.1332,
-          weather: "22°C Clear",
-          anchors: [
+          name: "Mexico City 7 Day Trip",
+          daysCount: 7,
+          budget: 1500,
+          spent: 120,
+          days: [
             {
-              id: "a1",
-              title: "Palacio de Bellas Artes",
-              mapUrl: "https://maps.google.com/?q=Palacio+de+Bellas+Artes",
-              checklist: [
-                { text: "Buy tickets for murals deck", done: true },
-                { text: "Photo stop at Alameda Central", done: false }
-              ],
-              food: [
-                { name: "Café Tacuba (Lunch)", type: "food" },
-                { name: "Churrería El Moro", type: "food" },
-                { name: "Alameda Central Walk", type: "spot" }
-              ],
-              notes: "Take Metro Line 2 to Bellas Artes. Exit Gate 3."
-            }
-          ]
-        },
-        {
-          id: 2,
-          titleEn: "Day 2 - Coyoacán & Frida Kahlo Museum",
-          titleEs: "Día 2 - Coyoacán y Museo Frida Kahlo",
-          lat: 19.3497,
-          lon: -99.1625,
-          weather: "20°C Clouds",
-          anchors: [
+              id: 1,
+              titleEn: "Day 1 - Arrival & Historic Center",
+              titleEs: "Día 1 - Llegada y Centro Histórico",
+              lat: 19.4326,
+              lon: -99.1332,
+              weather: "22°C Clear",
+              anchors: [
+                {
+                  id: "a1",
+                  title: "Palacio de Bellas Artes",
+                  mapUrl: "https://maps.google.com/?q=Palacio+de+Bellas+Artes",
+                  checklist: [
+                    { text: "Buy tickets for murals deck", done: true },
+                    { text: "Photo stop at Alameda Central", done: false }
+                  ],
+                  food: [
+                    { name: "Café Tacuba (Lunch)", type: "food" },
+                    { name: "Churrería El Moro", type: "food" },
+                    { name: "Alameda Central Walk", type: "spot" }
+                  ],
+                  notes: "Take Metro Line 2 to Bellas Artes. Exit Gate 3."
+                }
+              ]
+            },
             {
-              id: "a2",
-              title: "Museo Frida Kahlo (Casa Azul)",
-              mapUrl: "https://maps.google.com/?q=Museo+Frida+Kahlo",
-              checklist: [
-                { text: "Arrive 15 min early for security line", done: false },
-                { text: "Camera permit fee at entrance", done: false }
-              ],
-              food: [
-                { name: "Tacos de Coyoacán", type: "food" },
-                { name: "Mercado de Coyoacán tostadas", type: "food" }
-              ],
-              notes: "Uber from stay takes ~25 mins depending on traffic."
+              id: 2,
+              titleEn: "Day 2 - Coyoacán & Frida Kahlo Museum",
+              titleEs: "Día 2 - Coyoacán y Museo Frida Kahlo",
+              lat: 19.3497,
+              lon: -99.1625,
+              weather: "20°C Clouds",
+              anchors: [
+                {
+                  id: "a2",
+                  title: "Museo Frida Kahlo (Casa Azul)",
+                  mapUrl: "https://maps.google.com/?q=Museo+Frida+Kahlo",
+                  checklist: [
+                    { text: "Arrive 15 min early for security line", done: false },
+                    { text: "Camera permit fee at entrance", done: false }
+                  ],
+                  food: [
+                    { name: "Tacos de Coyoacán", type: "food" },
+                    { name: "Mercado de Coyoacán tostadas", type: "food" }
+                  ],
+                  notes: "Uber from stay takes ~25 mins depending on traffic."
+                }
+              ]
             }
           ]
         }
@@ -688,40 +968,153 @@
     };
 
     function initApp() {
-      const saved = localStorage.getItem('rumbo_data');
+      const saved = localStorage.getItem('rumbo_app_data');
       if (saved) {
-        tripData = JSON.parse(saved);
+        appData = JSON.parse(saved);
       }
-      render();
-      fetchRealTimeWeather();
+      showDashboard();
     }
 
     function saveState() {
-      localStorage.setItem('rumbo_data', JSON.stringify(tripData));
+      localStorage.setItem('rumbo_app_data', JSON.stringify(appData));
+    }
+
+    function showDashboard() {
+      document.getElementById('dashboardView').style.display = 'block';
+      document.getElementById('itineraryView').style.display = 'none';
+      document.getElementById('dashBackBtn').style.display = 'none';
+      document.getElementById('modeToggle').style.display = 'none';
+      renderDashboard();
+    }
+
+    function openTrip(tripId) {
+      activeTripId = tripId;
+      document.getElementById('dashboardView').style.display = 'none';
+      document.getElementById('itineraryView').style.display = 'block';
+      document.getElementById('dashBackBtn').style.display = 'flex';
+      document.getElementById('modeToggle').style.display = 'flex';
+      renderItinerary();
+      fetchRealTimeWeather();
     }
 
     function toggleLanguage() {
       currentLang = currentLang === 'en' ? 'es' : 'en';
       document.getElementById('langText').innerText = currentLang.toUpperCase();
-      render();
+      if (document.getElementById('dashboardView').style.display !== 'none') {
+        renderDashboard();
+      } else {
+        renderItinerary();
+      }
     }
 
     function toggleReadMode() {
       isReadOnly = !isReadOnly;
       document.getElementById('modeText').innerText = isReadOnly ? i18n[currentLang].viewMode : i18n[currentLang].editMode;
       document.getElementById('modeIcon').setAttribute('data-lucide', isReadOnly ? 'eye-off' : 'eye');
-      render();
+      renderItinerary();
+    }
+
+    // --- Dashboard Renderers ---
+    function renderDashboard() {
+      const t = i18n[currentLang];
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.innerText = t[key];
+      });
+
+      // Pinned Trip Card
+      const pinnedTrip = appData.trips.find(tr => tr.id === appData.pinnedTripId) || appData.trips[0];
+      const pinnedEl = document.getElementById('pinnedCard');
+      pinnedEl.innerHTML = `
+        <span class="pinned-badge">PINNED</span>
+        <div class="pinned-title">${pinnedTrip.name}</div>
+        <div class="pinned-sub">
+          <span><i data-lucide="calendar" size="14"></i> ${pinnedTrip.days.length} Days</span>
+          <span><i data-lucide="wallet" size="14"></i> $${pinnedTrip.budget} Budget</span>
+        </div>
+        <button class="open-trip-btn" onclick="openTrip(${pinnedTrip.id})">
+          <i data-lucide="arrow-right-circle" size="18"></i> ${t.openTrip}
+        </button>
+      `;
+
+      // Saved Trips Grid
+      const tripsGrid = document.getElementById('tripsGrid');
+      let gridHtml = appData.trips.map(tr => `
+        <div class="trip-card" onclick="openTrip(${tr.id})">
+          <div>
+            <div class="trip-card-title">${tr.name}</div>
+            <div class="trip-card-meta">${tr.days.length} Days • $${tr.budget}</div>
+          </div>
+          <div style="font-size: 0.75rem; color: var(--accent-teal); font-weight:700; margin-top:12px;">
+            ${t.openTrip} →
+          </div>
+        </div>
+      `).join('');
+
+      gridHtml += `
+        <div class="add-trip-card" onclick="openNewTripModal()">
+          <i data-lucide="plus-circle" size="24"></i>
+          <span>${t.newTrip}</span>
+        </div>
+      `;
+
+      tripsGrid.innerHTML = gridHtml;
+      lucide.createIcons();
+    }
+
+    function openNewTripModal() {
+      document.getElementById('newTripModalOverlay').style.display = 'flex';
+    }
+
+    function closeNewTripModal() {
+      document.getElementById('newTripModalOverlay').style.display = 'none';
+    }
+
+    function createNewTrip(e) {
+      e.preventDefault();
+      const title = document.getElementById('newTripTitle').value;
+      const budget = parseFloat(document.getElementById('newTripBudget').value) || 1000;
+
+      const newId = Date.now();
+      appData.trips.push({
+        id: newId,
+        name: title,
+        budget: budget,
+        spent: 0,
+        days: [
+          {
+            id: Date.now(),
+            titleEn: "Day 1 - Exploration",
+            titleEs: "Día 1 - Exploración",
+            lat: 19.4326,
+            lon: -99.1332,
+            weather: "20°C Clear",
+            anchors: []
+          }
+        ]
+      });
+
+      saveState();
+      closeNewTripModal();
+      openTrip(newId);
+    }
+
+    // --- Itinerary Logic ---
+    function getActiveTrip() {
+      return appData.trips.find(tr => tr.id === activeTripId);
     }
 
     function promptEditBudget() {
       if (isReadOnly) return;
-      const newBudget = prompt("Enter total trip budget ($):", tripData.budget);
+      const trip = getActiveTrip();
+      const newBudget = prompt("Enter total trip budget ($):", trip.budget);
       if (newBudget !== null) {
         const val = parseFloat(newBudget);
         if (!isNaN(val) && val >= 0) {
-          tripData.budget = val;
+          trip.budget = val;
           saveState();
-          render();
+          renderItinerary();
         }
       }
     }
@@ -729,21 +1122,23 @@
     function logExpense(amount) {
       const parsed = parseFloat(amount);
       if (!isNaN(parsed) && parsed > 0) {
-        tripData.spent += parsed;
+        const trip = getActiveTrip();
+        trip.spent += parsed;
         saveState();
-        render();
+        renderItinerary();
       }
     }
 
     function toggleCheck(dayId, anchorId, checkIdx) {
       if (isReadOnly) return;
-      const day = tripData.days.find(d => d.id === dayId);
+      const trip = getActiveTrip();
+      const day = trip.days.find(d => d.id === dayId);
       if (day) {
         const anchor = day.anchors.find(a => a.id === anchorId);
         if (anchor && anchor.checklist[checkIdx]) {
           anchor.checklist[checkIdx].done = !anchor.checklist[checkIdx].done;
           saveState();
-          render();
+          renderItinerary();
         }
       }
     }
@@ -757,7 +1152,8 @@
     }
 
     function openEditModal(dayId, anchorId) {
-      const day = tripData.days.find(d => d.id === dayId);
+      const trip = getActiveTrip();
+      const day = trip.days.find(d => d.id === dayId);
       const anchor = day.anchors.find(a => a.id === anchorId);
       if (!anchor) return;
 
@@ -796,10 +1192,10 @@
         return { name: trimmed, type: 'food' };
       });
 
-      const day = tripData.days.find(d => d.id === dayId);
+      const trip = getActiveTrip();
+      const day = trip.days.find(d => d.id === dayId);
       if (day) {
         if (anchorId) {
-          // Edit
           const anchor = day.anchors.find(a => a.id === anchorId);
           anchor.title = title;
           anchor.mapUrl = mapUrl;
@@ -807,7 +1203,6 @@
           anchor.food = food;
           anchor.notes = notes;
         } else {
-          // New
           day.anchors.push({
             id: 'a_' + Date.now(),
             title, mapUrl, checklist, food, notes
@@ -815,26 +1210,28 @@
         }
         saveState();
         closeModal();
-        render();
+        renderItinerary();
       }
     }
 
     function deleteAnchor(dayId, anchorId) {
       if (isReadOnly) return;
       if (confirm("Delete this location?")) {
-        const day = tripData.days.find(d => d.id === dayId);
+        const trip = getActiveTrip();
+        const day = trip.days.find(d => d.id === dayId);
         if (day) {
           day.anchors = day.anchors.filter(a => a.id !== anchorId);
           saveState();
-          render();
+          renderItinerary();
         }
       }
     }
 
     function addNewDay() {
       if (isReadOnly) return;
-      const nextNum = tripData.days.length + 1;
-      tripData.days.push({
+      const trip = getActiveTrip();
+      const nextNum = trip.days.length + 1;
+      trip.days.push({
         id: Date.now(),
         titleEn: `Day ${nextNum} - New Exploration`,
         titleEs: `Día ${nextNum} - Nueva Exploración`,
@@ -844,10 +1241,10 @@
         anchors: []
       });
       saveState();
-      render();
+      renderItinerary();
     }
 
-    // --- Drag and Drop Handlers ---
+    // Drag and Drop
     function handleDragStart(e, dayId, index) {
       if (isReadOnly) return;
       draggedItem = { dayId, index };
@@ -862,17 +1259,21 @@
       e.preventDefault();
       if (!draggedItem || draggedItem.dayId !== targetDayId) return;
       
-      const day = tripData.days.find(d => d.id === targetDayId);
+      const trip = getActiveTrip();
+      const day = trip.days.find(d => d.id === targetDayId);
       const movedItem = day.anchors.splice(draggedItem.index, 1)[0];
       day.anchors.splice(targetIndex, 0, movedItem);
 
       draggedItem = null;
       saveState();
-      render();
+      renderItinerary();
     }
 
     async function fetchRealTimeWeather() {
-      for (let day of tripData.days) {
+      const trip = getActiveTrip();
+      if (!trip) return;
+
+      for (let day of trip.days) {
         try {
           const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${day.lat}&longitude=${day.lon}&current_weather=true`);
           const data = await res.json();
@@ -884,20 +1285,22 @@
           console.warn("Weather fetch fallback", e);
         }
       }
-      render();
+      renderItinerary();
     }
 
-    function render() {
+    function renderItinerary() {
       const t = i18n[currentLang];
+      const trip = getActiveTrip();
+      if (!trip) return;
 
       document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.getAttribute('data-i18n');
         if (t[key]) el.innerText = t[key];
       });
 
-      document.getElementById('displayBudget').innerText = `$${tripData.budget}`;
-      document.getElementById('displaySpent').innerText = `$${tripData.spent}`;
-      const remain = tripData.budget - tripData.spent;
+      document.getElementById('displayBudget').innerText = `$${trip.budget}`;
+      document.getElementById('displaySpent').innerText = `$${trip.spent}`;
+      const remain = trip.budget - trip.spent;
       const remainEl = document.getElementById('displayRemain');
       remainEl.innerText = `$${remain}`;
       remainEl.style.color = remain < 0 ? 'var(--accent-coral)' : 'var(--accent-teal)';
@@ -905,7 +1308,7 @@
       const timelineEl = document.getElementById('timeline');
       timelineEl.innerHTML = '';
 
-      tripData.days.forEach(day => {
+      trip.days.forEach(day => {
         const dayTitle = currentLang === 'en' ? day.titleEn : day.titleEs;
         
         let anchorsHtml = day.anchors.map((anchor, index) => {
