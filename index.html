@@ -550,7 +550,7 @@
     }
 
     /* Action Buttons for Adding & Editing */
-    .add-location-btn, .add-day-btn {
+    .add-location-btn {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -568,10 +568,34 @@
       transition: all 0.2s ease;
     }
 
-    .add-location-btn:hover, .add-day-btn:hover {
+    .add-location-btn:hover {
       background: rgba(0, 210, 211, 0.05);
       border-color: var(--accent-teal);
       color: var(--accent-teal);
+    }
+
+    /* Symmetrical Coral Add Day Button */
+    .add-day-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: rgba(255, 94, 87, 0.03);
+      border: 1px dashed var(--accent-coral);
+      color: var(--accent-coral);
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-top: 24px;
+      transition: all 0.2s ease;
+    }
+
+    .add-day-btn:hover {
+      background: rgba(255, 94, 87, 0.1);
+      color: #fff;
     }
 
     .action-icon-btn {
@@ -827,6 +851,27 @@
         <div class="modal-actions">
           <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
           <button type="submit" class="btn-save">Save Location</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal Container for Day Title Form -->
+  <div id="dayTitleModalOverlay" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span>Edit Day Title</span>
+        <button class="action-icon-btn" onclick="closeDayTitleModal()"><i data-lucide="x"></i></button>
+      </div>
+      <form onsubmit="saveDayTitle(event)">
+        <input type="hidden" id="editDayTitleId">
+        <div class="form-group">
+          <label class="form-label">Day Title / Theme</label>
+          <input type="text" id="editDayTitleInput" class="form-input" placeholder="e.g. Historic Center Exploration">
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" onclick="closeDayTitleModal()">Cancel</button>
+          <button type="submit" class="btn-save">Save Title</button>
         </div>
       </form>
     </div>
@@ -1233,22 +1278,37 @@
       }
     }
 
-    function editDayTitle(dayId) {
+    /* Day Title Modal Functions */
+    function openDayTitleModal(dayId) {
       if (isReadOnly) return;
       const trip = getActiveTrip();
       const day = trip.days.find(d => d.id === dayId);
       if (!day) return;
 
-      const currentTitle = currentLang === 'en' ? (day.customTitleEn || '') : (day.customTitleEs || '');
-      const newTitle = prompt("Add or change title for this day (leave blank for just 'Day X'):", currentTitle);
+      document.getElementById('editDayTitleId').value = dayId;
+      document.getElementById('editDayTitleInput').value = currentLang === 'en' ? (day.customTitleEn || '') : (day.customTitleEs || '');
+      document.getElementById('dayTitleModalOverlay').style.display = 'flex';
+    }
 
-      if (newTitle !== null) {
+    function closeDayTitleModal() {
+      document.getElementById('dayTitleModalOverlay').style.display = 'none';
+    }
+
+    function saveDayTitle(e) {
+      e.preventDefault();
+      const dayId = parseInt(document.getElementById('editDayTitleId').value);
+      const newTitle = document.getElementById('editDayTitleInput').value.trim();
+
+      const trip = getActiveTrip();
+      const day = trip.days.find(d => d.id === dayId);
+      if (day) {
         if (currentLang === 'en') {
-          day.customTitleEn = newTitle.trim();
+          day.customTitleEn = newTitle;
         } else {
-          day.customTitleEs = newTitle.trim();
+          day.customTitleEs = newTitle;
         }
         saveState();
+        closeDayTitleModal();
         renderItinerary();
       }
     }
@@ -1427,7 +1487,7 @@
               <div class="day-title-container">
                 <span class="day-title">${fullDayTitle}</span>
                 ${!isReadOnly ? `
-                  <button class="action-icon-btn" onclick="editDayTitle(${day.id})" title="Edit Day Title"><i data-lucide="pencil" size="14"></i></button>
+                  <button class="action-icon-btn" onclick="openDayTitleModal(${day.id})" title="Edit Day Title"><i data-lucide="pencil" size="14"></i></button>
                   <button class="action-icon-btn" onclick="deleteDay(${day.id})" title="Delete Day"><i data-lucide="trash-2" size="14"></i></button>
                 ` : ''}
               </div>
