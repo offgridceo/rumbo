@@ -364,6 +364,12 @@
       gap: 10px;
     }
 
+    .day-title-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     .day-title {
       font-family: var(--font-heading);
       font-size: 1.3rem;
@@ -915,8 +921,8 @@
           days: [
             {
               id: 1,
-              titleEn: "Day 1 - Arrival & Historic Center",
-              titleEs: "Día 1 - Llegada y Centro Histórico",
+              customTitleEn: "Arrival & Historic Center",
+              customTitleEs: "Llegada y Centro Histórico",
               lat: 19.4326,
               lon: -99.1332,
               weather: "22°C Clear",
@@ -940,8 +946,8 @@
             },
             {
               id: 2,
-              titleEn: "Day 2 - Coyoacán & Frida Kahlo Museum",
-              titleEs: "Día 2 - Coyoacán y Museo Frida Kahlo",
+              customTitleEn: "Coyoacán & Frida Kahlo Museum",
+              customTitleEs: "Coyoacán y Museo Frida Kahlo",
               lat: 19.3497,
               lon: -99.1625,
               weather: "20°C Clouds",
@@ -1085,8 +1091,8 @@
         days: [
           {
             id: Date.now(),
-            titleEn: "Day 1 - Exploration",
-            titleEs: "Día 1 - Exploración",
+            customTitleEn: "",
+            customTitleEs: "",
             lat: 19.4326,
             lon: -99.1332,
             weather: "20°C Clear",
@@ -1227,14 +1233,43 @@
       }
     }
 
+    function editDayTitle(dayId) {
+      if (isReadOnly) return;
+      const trip = getActiveTrip();
+      const day = trip.days.find(d => d.id === dayId);
+      if (!day) return;
+
+      const currentTitle = currentLang === 'en' ? (day.customTitleEn || '') : (day.customTitleEs || '');
+      const newTitle = prompt("Add or change title for this day (leave blank for just 'Day X'):", currentTitle);
+
+      if (newTitle !== null) {
+        if (currentLang === 'en') {
+          day.customTitleEn = newTitle.trim();
+        } else {
+          day.customTitleEs = newTitle.trim();
+        }
+        saveState();
+        renderItinerary();
+      }
+    }
+
+    function deleteDay(dayId) {
+      if (isReadOnly) return;
+      if (confirm("Are you sure you want to delete this entire day?")) {
+        const trip = getActiveTrip();
+        trip.days = trip.days.filter(d => d.id !== dayId);
+        saveState();
+        renderItinerary();
+      }
+    }
+
     function addNewDay() {
       if (isReadOnly) return;
       const trip = getActiveTrip();
-      const nextNum = trip.days.length + 1;
       trip.days.push({
         id: Date.now(),
-        titleEn: `Day ${nextNum} - New Exploration`,
-        titleEs: `Día ${nextNum} - Nueva Exploración`,
+        customTitleEn: "",
+        customTitleEs: "",
         lat: 19.4326,
         lon: -99.1332,
         weather: "20°C Clear",
@@ -1308,10 +1343,12 @@
       const timelineEl = document.getElementById('timeline');
       timelineEl.innerHTML = '';
 
-      trip.days.forEach(day => {
-        const dayTitle = currentLang === 'en' ? day.titleEn : day.titleEs;
-        
-        let anchorsHtml = day.anchors.map((anchor, index) => {
+      trip.days.forEach((day, index) => {
+        const dayNumberLabel = currentLang === 'en' ? `Day ${index + 1}` : `Día ${index + 1}`;
+        const customTitle = currentLang === 'en' ? day.customTitleEn : day.customTitleEs;
+        const fullDayTitle = customTitle ? `${dayNumberLabel} - ${customTitle}` : dayNumberLabel;
+
+        let anchorsHtml = day.anchors.map((anchor, aIndex) => {
           let checklistHtml = anchor.checklist.map((item, idx) => `
             <li class="check-item ${item.done ? 'done' : ''}">
               <input type="checkbox" ${item.done ? 'checked' : ''} ${isReadOnly ? 'disabled' : ''} onclick="toggleCheck(${day.id}, '${anchor.id}', ${idx})">
@@ -1327,9 +1364,9 @@
           return `
             <div class="anchor-card" 
                  draggable="${!isReadOnly}" 
-                 ondragstart="handleDragStart(event, ${day.id}, ${index})"
+                 ondragstart="handleDragStart(event, ${day.id}, ${aIndex})"
                  ondragover="handleDragOver(event)"
-                 ondrop="handleDrop(event, ${day.id}, ${index})">
+                 ondrop="handleDrop(event, ${day.id}, ${aIndex})">
               
               <div class="anchor-top">
                 <span class="anchor-title">
@@ -1387,7 +1424,13 @@
           <div class="day-block">
             <div class="day-node"></div>
             <div class="day-header">
-              <span class="day-title">${dayTitle}</span>
+              <div class="day-title-container">
+                <span class="day-title">${fullDayTitle}</span>
+                ${!isReadOnly ? `
+                  <button class="action-icon-btn" onclick="editDayTitle(${day.id})" title="Edit Day Title"><i data-lucide="pencil" size="14"></i></button>
+                  <button class="action-icon-btn" onclick="deleteDay(${day.id})" title="Delete Day"><i data-lucide="trash-2" size="14"></i></button>
+                ` : ''}
+              </div>
               <span class="weather-badge"><i data-lucide="cloud-sun" size="14"></i> ${day.weather || t.weatherLoading}</span>
             </div>
             ${anchorsHtml}
